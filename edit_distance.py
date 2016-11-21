@@ -33,16 +33,17 @@ def get_matrix(original, final):
     :param final: string which will be transformed
     :return: matrix with available edit prescriptions
     """
-    size_origin, size_final = len(original) + 1, len(final) + 1
-    matrix = list(map(list, [[0] * size_final] * size_origin))
-    action_matrix = list(map(list, [[''] * size_final] * size_origin))
 
-    for i in range(size_origin):
-        matrix[i][0] = i
+    size_origin, size_final = len(original) + 1, len(final) + 1
+    matrix = [[0] * size_final for _ in range(size_origin)]
+    action_matrix = [[''] * size_final for _ in range(size_origin)]
+
+    for i in range(1, size_origin):
+        matrix[i][0] = i + COST_MAP[DELETE]
         action_matrix[i][0] = DELETE
 
-    for j in range(size_final):
-        matrix[0][j] = j
+    for j in range(1, size_final):
+        matrix[0][j] = j + COST_MAP[INSERT]
         action_matrix[0][j] = INSERT
 
     for i, char_origin in enumerate(original, 1):
